@@ -29,7 +29,18 @@ public class MainLoop
             var result = Bindings.pw_main_loop_run(RawHandle);
 
             if (result < 0)
-                Console.WriteLine($"Got Error while running MainLoop: {result}!"); // TODO Logging. 
+                Console.WriteLine($"Got Error while running MainLoop: {result}!"); // TODO Logging.
+        }
+    }
+
+    public void Quit()
+    {
+        unsafe
+        {
+            var result = Bindings.pw_main_loop_quit(RawHandle);
+
+            if (result < 0)
+                Console.WriteLine($"Got Error while quitting MainLoop: {result}!"); // TODO Logging.
         }
     }
 }

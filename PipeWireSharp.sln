@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PipeWireSharp", "PipeWireSh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PipeWireSharp.BindGen", "PipeWireSharp.BindGen\PipeWireSharp.BindGen.csproj", "{93E61CD7-D1CA-4D6C-9F0C-77C0E59F3D05}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PipeWireSharp.Tests", "PipeWireSharp.Tests\PipeWireSharp.Tests.csproj", "{038718C8-7363-4497-9585-E8A91DFF2FF4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{93E61CD7-D1CA-4D6C-9F0C-77C0E59F3D05}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93E61CD7-D1CA-4D6C-9F0C-77C0E59F3D05}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93E61CD7-D1CA-4D6C-9F0C-77C0E59F3D05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{038718C8-7363-4497-9585-E8A91DFF2FF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{038718C8-7363-4497-9585-E8A91DFF2FF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{038718C8-7363-4497-9585-E8A91DFF2FF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{038718C8-7363-4497-9585-E8A91DFF2FF4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

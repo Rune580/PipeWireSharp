@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <LangVersion>preview</LangVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="FFMpegCore" Version="5.2.0" />
+      <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
+      <PackageReference Include="SixLabors.ImageSharp" Version="3.1.8" />
+      <PackageReference Include="Tmds.DBus.Protocol" Version="0.21.2" />
+      <PackageReference Include="xunit.analyzers" Version="1.21.0">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="xunit.runner.visualstudio" Version="3.0.2">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="xunit.v3" Version="2.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\PipeWireSharp\PipeWireSharp.csproj" />
+    </ItemGroup>
+
+</Project>

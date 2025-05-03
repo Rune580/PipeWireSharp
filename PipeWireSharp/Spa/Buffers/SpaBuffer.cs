@@ -23,8 +23,6 @@ public class SpaBuffer
             MetaData = new SpaMeta[RawHandle->n_metas];
             for (int i = 0; i < MetaData.Length; i++)
                 MetaData[i] = new SpaMeta((IntPtr)(&RawHandle->metas[i]));
-            
-            
         }
     }
 }

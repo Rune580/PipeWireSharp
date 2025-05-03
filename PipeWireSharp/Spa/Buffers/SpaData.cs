@@ -1,5 +1,6 @@
-using System.Runtime.InteropServices;
 using PipeWireSharp.Native;
+using PipeWireSharp.Spa.Enums;
+using PipeWireSharp.Spa.Utils;
 
 namespace PipeWireSharp.Spa.Buffers;
 
@@ -35,36 +36,26 @@ public class SpaData
         }
     }
 
-    public byte[] GetFrameData()
+    public IntPtr Data
+    {
+        get
+        {
+            unsafe
+            {
+                return (IntPtr)((IntPtr)RawHandle->data + RawHandle->chunk->offset);
+            }
+        }
+    }
+
+    public ReadOnlySpan<byte> GetFrameData()
     {
         unsafe
         {
             var dataPtr = (IntPtr)RawHandle->data + RawHandle->chunk->offset;
-
-            var buffer = new byte[RawHandle->chunk->size];
-            
-            Marshal.Copy((IntPtr)dataPtr, buffer, 0, buffer.Length);
-            
-            return buffer;
+            return new ReadOnlySpan<byte>((void*)dataPtr, (int)RawHandle->chunk->size);
         }
     }
 
-    public IEnumerable<byte[]> EnumerateRows()
-    {
-        var bytesRead = 0;
-
-        while (bytesRead < Size)
-        {
-            var buffer = new byte[Stride];
-            
-            unsafe
-            {
-                var dataPtr = (IntPtr)RawHandle->data + RawHandle->chunk->offset + bytesRead;
-                Marshal.Copy((IntPtr)dataPtr, buffer, 0, buffer.Length);
-                bytesRead += Stride;
-            }
-            
-            yield return buffer;
-        }
-    }
+    public VideoFrameDataAccessor AccessVideoFrameData(SpaVideoFormat videoFormat, int width, int height) =>
+        new(GetFrameData(), videoFormat, Stride, width, height);
 }
