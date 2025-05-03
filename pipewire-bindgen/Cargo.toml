@@ -1,0 +1,19 @@
+[package]
+name = "pipewire_bindings"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["staticlib","lib","dylib"]
+
+[dependencies]
+
+[build-dependencies]
+bindgen = "0.71.1"
+cc = "1.2.20"
+csbindgen = "1.9.3"
+system-deps = "7.0.3"
+
+[package.metadata.system-deps]
+libspa = { name = "libspa-0.2", version = "0.2" }
+libpipewire = { name = "libpipewire-0.3", version = "0.3" }
