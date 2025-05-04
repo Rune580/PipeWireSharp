@@ -20,7 +20,7 @@ public class PipeWireRecordingTests
 
         Console.WriteLine("Recording started!");
         
-        await Task.Delay(4000, TestContext.Current.CancellationToken);
+        // await Task.Delay(4000, TestContext.Current.CancellationToken);
         
         recordingSession.StopRecording();
         

@@ -24,20 +24,17 @@ public class RecordingSession
         _captureSession.StartCapturing();
         _isRecording = true;
 
-        ThreadPool.QueueUserWorkItem(_ =>
+        var videoSource = new RawVideoPipeSource(GetVideoFrames())
         {
-            var videoSource = new RawVideoPipeSource(GetVideoFrames())
-            {
-                FrameRate = 60,
-            };
+            FrameRate = 60,
+        };
 
-            FFMpegArguments.FromPipeInput(videoSource)
-                .OutputToFile(filePath, true, options =>
-                {
-                    options.WithVideoCodec(VideoCodec.LibX264);
-                })
-                .ProcessSynchronously();
-        });
+        FFMpegArguments.FromPipeInput(videoSource)
+            .OutputToFile(filePath, true, options =>
+            {
+                options.WithVideoCodec(VideoCodec.LibX264);
+            })
+            .ProcessSynchronously();
     }
 
     public void StopRecording()
@@ -48,16 +45,18 @@ public class RecordingSession
 
     private void OnFrameDataReceived(int streamId, VideoFrameDataAccessor accessor)
     {
-        var frameData = new Memory<byte>(new byte[accessor.ByteSizeOfFrame]);
+        var croppedFrame = accessor.Crop(3072, 1612, 600, 600);
+        
+        var frameData = new Memory<byte>(new byte[croppedFrame.ByteSizeOfFrame]);
         var offset = 0;
         
-        accessor.AccessRows(span =>
+        croppedFrame.AccessRows(span =>
         {
             span.CopyTo(frameData[offset..].Span);
             offset += span.Length;
         });
         
-        _frames.Enqueue(new RawVideoFrame(frameData, accessor.FrameWidth, accessor.FrameHeight, accessor.VideoFormat.ToString().ToLower()));
+        _frames.Enqueue(new RawVideoFrame(frameData, croppedFrame.FrameWidth, croppedFrame.FrameHeight, croppedFrame.VideoFormat.ToString().ToLower()));
     }
 
     public IEnumerable<RawVideoFrame> GetVideoFrames()
@@ -66,11 +65,18 @@ public class RecordingSession
         {
             Thread.Sleep(100);
         }
+
+        var frames = 60*10;
         
-        while (_isRecording || !_frames.IsEmpty)
+        while ((_isRecording || !_frames.IsEmpty) && frames > 0)
         {
             if (!_frames.TryDequeue(out var frame))
+            {
+                Thread.Sleep(500);
                 continue;
+            }
+
+            frames--;
             
             yield return frame;
         }

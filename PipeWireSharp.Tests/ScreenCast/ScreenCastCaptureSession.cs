@@ -82,7 +82,10 @@ public class ScreenCastCaptureSession
 
     public void StartCapturing()
     {
-        ThreadPool.QueueUserWorkItem(_ => _mainLoop.Run());
+        ThreadPool.QueueUserWorkItem(_ =>
+        {
+            _mainLoop.Run();
+        });
     }
 
     public void StopCapturing()
